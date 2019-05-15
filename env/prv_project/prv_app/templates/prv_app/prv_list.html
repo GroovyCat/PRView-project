@@ -1,0 +1,33 @@
+{% load static %}
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>PRView</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'css/prv_app.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            <h1><a href="/"><p class="text-center">PRView</p></a></h1>
+        </div>
+        <pre></pre>
+        <pre></pre>
+        <pre></pre>
+        <div class="col-md-4">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="해당 상품 링크 주소를 입력해주세요!!">
+                    <span class="input-group-btn">
+                        <button class="btn btn-secondary" type="button">찾기</button>
+                    </span>
+            </div>
+        </div>
+        <pre></pre>
+        <div class="col-xs-6 col-sm-4">
+            <div class="list-group">
+                <a href="#" class="list-group-item">G마켓</a>
+                <a href="#" class="list-group-item">인터파크</a>
+                <a href="#" class="list-group-item">위메프</a>
+            </div>
+        </div>
+    </body>
+</html>
