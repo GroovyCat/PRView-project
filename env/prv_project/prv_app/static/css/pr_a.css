@@ -1,0 +1,13 @@
+.container {
+    background-image: url("/static/img/header.png");
+    margin-top: auto;
+    text-align: center;
+    width: 1500px;
+    height: 200px;
+}
+.list-group {
+    list-style-position: inherit;
+}
+h1 p {
+    color: black;
+}
