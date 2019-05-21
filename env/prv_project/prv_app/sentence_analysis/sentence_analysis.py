@@ -1,6 +1,7 @@
 '''
     텍스트 데이터를 기반으로 한 문장을 분석하여 명사를 추출하고 
     빈도수 별로 순위를 매겨 저장하기 위한 코드
+    실행을 위해서는 konlpy, numpy 패키지가 필요합니다.
 '''
 from konlpy.tag import Okt
 from collections import Counter
