@@ -18,3 +18,14 @@ elem=driver.find_element_by_name("query").send_keys('악인전') #검색창에 �
 driver.find_element_by_xpath('//*[@id="search_btn"]/span[2]').click() 
 #신규텝으로 이동 / 드라이버는 위치는 기존유지
 
+driver.find_element_by_xpath("//a[@class='sh_movie_link']").click() 
+
+#드라이버 위치를 신규 텝으로 전환
+last_tab = driver.window_handles[-1]
+driver.switch_to.window(window_name=last_tab)
+driver.find_element_by_xpath("//a[@class='tab05_off']").click() #영화 리뷰 페이지 1
+
+#사이트 이동을 위해 iframe의 주소 받아옴 
+iframe = driver.find_element_by_id("pointAfterListIframe") #id로 iframe 값을 찾음
+driver.switch_to.frame(iframe) #변환해줌
+
