@@ -29,3 +29,19 @@ driver.find_element_by_xpath("//a[@class='tab05_off']").click() #영화 리뷰 �
 iframe = driver.find_element_by_id("pointAfterListIframe") #id로 iframe 값을 찾음
 driver.switch_to.frame(iframe) #변환해줌
 
+element =driver.find_element_by_xpath("//a[@id='pagerTagAnchor1']") #리뷰 페이지
+
+ActionChains(driver) \
+    .key_down(Keys.CONTROL) \
+    .click(element) \
+    .key_up(Keys.CONTROL) \
+    .perform()
+
+sleep(3) 
+
+#드라이버 위치를 신규 텝으로 전환
+last_tab = driver.window_handles[-1]
+driver.switch_to.window(window_name=last_tab)
+
+html = driver.page_source # 페이지의 elements모두 가져오기
+#print(html) #새 패이지의 element가 맞는지 확인 코드
