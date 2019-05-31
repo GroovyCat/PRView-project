@@ -45,3 +45,17 @@ driver.switch_to.window(window_name=last_tab)
 
 html = driver.page_source # 페이지의 elements모두 가져오기
 #print(html) #새 패이지의 element가 맞는지 확인 코드
+
+# 3. 댓글 페이지 html 구조 긁어오기
+source = BeautifulSoup(html,'html.parser',from_encoding='utf-8') # 한글이 있기때문에 encoding 해줌
+#print(source)
+
+# 페이지수 읽어오기 
+page_num = source.find('strong',{'class':'total'}).findAll('em')[1].get_text() #총 평가수
+page_num=(int(page_num.replace(',','')))/10 #str 을 int형으로 변환 읽어온 텍스트중 ,표시를 공백으로 바꿔줌
+page_num=math.ceil(page_num) #올림
+#print(page_num)
+
+if(page_num>1000):
+    page_num=1000
+#print(page_num)
