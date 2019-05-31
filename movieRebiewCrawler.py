@@ -4,7 +4,9 @@ from bs4 import BeautifulSoup # 웹페이지 내용구조 해석
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains #contril click in selenium
 import math #math 모듈을 먼저 import해야 한다.
-from time import sleep 
+from time import sleep
+from urllib.request import urlopen # 특정 웹서버에 접근
+import requests #서버 접근 허용을 위해 사용 
  
 driver = webdriver.Chrome('/Users/wkddn/Documents/crawling/ChromeDriver 74.0.3729.6/chromedriver')
 #driver = webdriver.PhantomJS('/Users\/kddn/Documents/crawling/phantomjs-2.1.1-windows/bin/phantomjs')
@@ -63,3 +65,22 @@ if(page_num>1000):
 movieUrl = driver.current_url  #영화 리뷰 사이트 url 받아오기  (현제 url 받아오는 함수 사용)
 movieUrl= movieUrl.replace('&page=1', '&page={}') #replace함수를 사용해 url을 반복문에 사용하기 좋게 바꿔주기
 
+movie_reviews=[]
+#페이지 수만큼 반복
+for i in range(1,page_num+1):
+    url = movieUrl.format(i)
+    webpage = urlopen(url)
+    source = BeautifulSoup(webpage,'html.parser',from_encoding='utf-8')
+    reviews = source.find('div',{'class': 'score_result'}).findAll('li')
+    time.sleep(1)
+    for review in reviews:
+        movie_reviews.append(review.p.get_text().strip().replace('\n','').replace('\t','').replace('\r',''))
+
+# 텍스트파일에 댓글 저장하기
+file = open('movie_b.txt','w',encoding='utf-8')
+
+for review in movie_reviews:
+    file.write(review+'\n')
+
+file.close()
+print("end")
