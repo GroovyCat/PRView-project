@@ -7,7 +7,11 @@ import math #math 모듈을 먼저 import해야 한다.
 from time import sleep
 from urllib.request import urlopen # 특정 웹서버에 접근
 import requests #서버 접근 허용을 위해 사용 
- 
+
+
+movieName = input()
+print(movieName)
+
 driver = webdriver.Chrome('/Users/wkddn/Documents/crawling/ChromeDriver 74.0.3729.6/chromedriver')
 #driver = webdriver.PhantomJS('/Users\/kddn/Documents/crawling/phantomjs-2.1.1-windows/bin/phantomjs')
 driver.implicitly_wait(3)
@@ -16,7 +20,7 @@ driver.implicitly_wait(3)
 driver.get('https://www.naver.com/') #네이버로 이동
 #웹드라이버를 사용하여 (검색과 사이트 이동(click))
 
-elem=driver.find_element_by_name("query").send_keys('악인전') #검색창에 악인전 검색
+elem=driver.find_element_by_name("query").send_keys(movieName) #검색창에 악인전 검색
 driver.find_element_by_xpath('//*[@id="search_btn"]/span[2]').click() 
 #신규텝으로 이동 / 드라이버는 위치는 기존유지
 
@@ -72,7 +76,7 @@ for i in range(1,page_num+1):
     webpage = urlopen(url)
     source = BeautifulSoup(webpage,'html.parser',from_encoding='utf-8')
     reviews = source.find('div',{'class': 'score_result'}).findAll('li')
-    time.sleep(1)
+    sleep(1)
     for review in reviews:
         movie_reviews.append(review.p.get_text().strip().replace('\n','').replace('\t','').replace('\r',''))
 
