@@ -59,3 +59,7 @@ page_num=math.ceil(page_num) #올림
 if(page_num>1000):
     page_num=1000
 #print(page_num)
+
+movieUrl = driver.current_url  #영화 리뷰 사이트 url 받아오기  (현제 url 받아오는 함수 사용)
+movieUrl= movieUrl.replace('&page=1', '&page={}') #replace함수를 사용해 url을 반복문에 사용하기 좋게 바꿔주기
+
