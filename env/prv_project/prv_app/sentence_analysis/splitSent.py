@@ -1,6 +1,16 @@
 '''
     텍스트 데이터를 기반으로 한 문장을 분석하여 명사를 추출하고 
-    빈도수 별로 순위를 매겨 저장하기 위한 코드
+    빈도수 별로 순위를 매겨 저장하기 위한 모듈
+
+    이 모듈이 같은 폴더, 하위 폴더에 있을 시
+    from splitSen import get_tags(text: str, noun_count: int) 로 불러와서
+    tags = get_tags(text: str, noun_count: int) 로 사용하면 됩니다. 
+
+    이 모듈이 상위 폴더에 있을 시
+    sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+    을 추가해 절대경로 추가
+
+    빈도 별 내림차순으로 정렬 된 리스트 반환
 '''
 from konlpy.tag import Okt
 from collections import Counter
@@ -18,23 +28,3 @@ def get_tags(text, noun_count):
         return_list.append(temp)
     
     return return_list
-
-def main():
-    input_file = "input.txt" # 분석할 문장이 저장된 파일명
-    result_file_ = "count.txt" # 분석된 명사들과 빈도를 저장하기 위한 파일명
-    noun_count = 100 # noun_count 값 많큼의 명사를 추출
-
-    open_input_file = open(input_file, 'r', -1, "utf-8") # 분석할 input.txt 파일 열기 
-    text = open_input_file.read() # 해당 파일의 내용 읽기
-    tags = get_tags(text, noun_count) # get_tags 함수 실행
-    open_input_file.close() # 파일 닫기
-
-    open_output_file = open(result_file, 'w', -1, "utf-8") # 결과로 쓰일 count.txt 열기
-    for tag in tags:
-        noun = tag['tag']
-        count = tag['count']
-        open_output_file.write('{} {}\n'.format(noun, count)) # (명사 횟수)의 형태로 결과 파일에 저장
-    open_output_file.close() # 파일 닫기
- 
-if __name__ == '__main__':
-    main()
