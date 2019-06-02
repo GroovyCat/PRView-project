@@ -21,7 +21,7 @@ driver.get('https://www.naver.com/') #네이버로 이동
 #웹드라이버를 사용하여 (검색과 사이트 이동(click))
 
 elem=driver.find_element_by_name("query").send_keys(movieName) #검색창에 악인전 검색
-driver.find_element_by_xpath('//*[@id="search_btn"]/span[2]').click() 
+driver.find_element_by_xpath('//*[@id="search_btn"]').click() 
 #신규텝으로 이동 / 드라이버는 위치는 기존유지
 
 driver.find_element_by_xpath("//a[@class='sh_movie_link']").click() 
