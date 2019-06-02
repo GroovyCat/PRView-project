@@ -5,12 +5,15 @@ from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup # 웹페이지 내용구조 해석
 from time import sleep  
 
+URL = input()
+print(URL)
+
 driver = webdriver.Chrome('/Users/wkddn/Documents/crawling/ChromeDriver 74.0.3729.6/chromedriver')
 #driver = webdriver.PhantomJS('/Users\/kddn/Documents/crawling/phantomjs-2.1.1-windows/bin/phantomjs') #판다스 사용할 경우 사용
 driver.implicitly_wait(3)
  
 # url에 접근한다.
-driver.get('http://itempage3.auction.co.kr/DetailView.aspx?itemno=B362967210')
+driver.get(URL)
 #driver.find_element_by_xpath("//a[@data-maintarget='#vip_tab_comment']").click() #xpath 테스트
 driver.find_element_by_id("tap_moving_2").click()  #
 sleep(1)
