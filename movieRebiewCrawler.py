@@ -69,22 +69,49 @@ if(page_num>1000):
 movieUrl = driver.current_url  #영화 리뷰 사이트 url 받아오기  (현제 url 받아오는 함수 사용)
 movieUrl= movieUrl.replace('&page=1', '&page={}') #replace함수를 사용해 url을 반복문에 사용하기 좋게 바꿔주기
 
-movie_reviews=[]
-#페이지 수만큼 반복
+all_movie_reviews=[]
+positive_movie_reviews=[]
+negative_movie_reviews=[]
+
+positive = 7    #defualt 값
+negative = 4    #defualt 값
+
+##페이지 수만큼 반복
 for i in range(1,page_num+1):
     url = movieUrl.format(i)
     webpage = urlopen(url)
     source = BeautifulSoup(webpage,'html.parser',from_encoding='utf-8')
-    reviews = source.find('div',{'class': 'score_result'}).findAll('li')
+    reviews=source.find('div',{'class': 'score_result'}).findAll('li')
+   
     sleep(1)
+    #전체 내용 담기
     for review in reviews:
-        movie_reviews.append(review.p.get_text().strip().replace('\n','').replace('\t','').replace('\r',''))
+        #전체 수집
+        all_movie_reviews.append(review.p.get_text().strip().replace('\n','').replace('\t','').replace('\r',''))
+        
+        if(int(review.em.text) >= positive):#긍정 부분 수집
+            positive_movie_reviews.append(review.p.get_text().strip().replace('\n','').replace('\t','').replace('\r',''))
+       
+        if(int(review.em.text) <= negative):#부정 부분 수집                                  
+            negative_movie_reviews.append(review.p.get_text().strip().replace('\n','').replace('\t','').replace('\r',''))
 
-# 텍스트파일에 댓글 저장하기
-file = open('movie_b.txt','w',encoding='utf-8')
+## 텍스트파일에 댓글 저장하기
+#전체, 긍정, 부정 순서
+file_a = open('movie_all.txt','w',encoding='utf-8') 
+file_p = open('movie_pos.txt','w',encoding='utf-8')
+file_n = open('movie_neg.txt','w',encoding='utf-8')
 
-for review in movie_reviews:
-    file.write(review+'\n')
+for review in all_movie_reviews:
+    file_a.write(review+'\n')
 
-file.close()
+for review in positive_movie_reviews:
+    file_p.write(review+'\n')
+
+for review in negative_movie_reviews:
+    file_n.write(review+'\n')
+    
+file_a.close()
+file_p.close()
+file_n.close()
+
 print("end")
