@@ -54,39 +54,55 @@ source = BeautifulSoup(page,'html.parser', from_encoding='utf-8') # 한글이 �
 page_num = source.find('div',{'class':'pagination pagination-interval'}).find('span',{'class':'num'}).get_text()    #페이지 부분을 str 형태로 변환
 page_num=int(page_num) #str 을 int형으로 변환 
 
-reviews_Contents=[] #저장할 리스트 변수
+all_reviews=[]
+positive_reviews=[]
+negative_reviews=[]
+
 #페이지 수만큼 반복
 for i in range(1,page_num+1):
     # 4. 네티즌 댓글부분(태그 , {속성명: 속성값})   
     page = driver.page_source
     source = BeautifulSoup(page,'html.parser',from_encoding='utf-8')
-    revies_table = source.find('tbody') 
-    #print(revies_table)
 
     #reviews_title = revies_table.findAll('strong') #제목 추출 수정필요
-    reviews_Content = revies_table.findAll('a',{'id': 'ankContents'})      #내용 추출
-   
-    if(page_num>i): #마지막 페이지 전에 는 다음페이지 이동이 없음으로 
-        driver.find_element_by_xpath("//a[@class='next']").click() #다음페이지 이동
+    all_review = source.find('tbody').findAll('tr')      #내용 추출
+    sleep(1)
     
-    sleep(1)    #사이트에 부담을 줄이기위해 사용
-   # print(i) #page 확인용
-    for review in reviews_Content:
-        reviews_Contents.append(review.get_text().strip().replace('\n','').replace('\t','').replace('\r',''))
-
-
-print(reviews_Contents) #결과 출력
+    #전체 긍정 부정 리스트 추가
+    for i in all_review:
+        all_reviews.append(i.findAll('a')[0].get_text().strip().replace('\n','').replace('\t','').replace('\r',''))
+        all_reviews.append(i.findAll('a')[1].get_text().strip().replace('\n','').replace('\t','').replace('\r',''))
+        
+        if(i.find('span',{'class':'badge-satisfaction badge-satisfaction-good'})):
+            positive_reviews.append(i.findAll('a')[0].get_text().strip().replace('\n','').replace('\t','').replace('\r',''))
+            positive_reviews.append(i.findAll('a')[1].get_text().strip().replace('\n','').replace('\t','').replace('\r',''))
+        
+        if(i.find('span',{'class':'badge-satisfaction badge-satisfaction-bad'})):
+            negative_reviews.append(i.findAll('a')[0].get_text().strip().replace('\n','').replace('\t','').replace('\r',''))
+            negative_reviews.append(i.findAll('a')[1].get_text().strip().replace('\n','').replace('\t','').replace('\r',''))
+        
+    driver.find_element_by_xpath("//a[@class='next']").click() #다음페이지 이동
+    
 
 # 텍스트파일에 댓글 저장하기
-file = open('shoppingMall.txt','w',encoding='utf-8')
+file_a = open('shoppingMall_all.txt','w',encoding='utf-8')
+file_p = open('shoppingMall_pos.txt','w',encoding='utf-8')
+file_n = open('shoppingMall_neg.txt','w',encoding='utf-8')
 
-for review in reviews_Contents:
-    file.write(review+'\n')
+for review in all_reviews:
+    file_a.write(review+'\n')
 
-file.close()
+for review in positive_reviews:
+    file_p.write(review+'\n')
 
-# end
+for review in negative_reviews:
+    file_n.write(review+'\n')
+    
+file_a.close()
+file_p.close()
+file_n.close()
+
+print("end")
 
 #남은  부분
-#사용자에게 입력 받을 부분 (사이트 or 영화명) , 긍부정 전체 분석 -> text
 ##영화와 사이트 class(매서드)로 구분 만들어줘야함
