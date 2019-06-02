@@ -1,13 +1,19 @@
-.container {
-    background-image: url("/static/img/header.png");
-    margin-top: auto;
-    text-align: center;
-    width: 1500px;
-    height: 200px;
+.masthead {
+    height: 100vh;
+    min-height: 500px;
+    background-image: url('https://source.unsplash.com/BtbjCFUvBXs/1920x1080');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.input-group{
+    width: 500px;
+    position: relative;
 }
 .list-group {
-    list-style-position: inherit;
+    width: 300px;
+    position: relative;
 }
-h1 p {
-    color: black;
+.input-group-btn {
+  background-color: skyblue;
 }
