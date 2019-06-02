@@ -59,7 +59,7 @@ positive_reviews=[]
 negative_reviews=[]
 
 #페이지 수만큼 반복
-for i in range(1,page_num+1):
+for numPage in range(1,page_num+1):
     # 4. 네티즌 댓글부분(태그 , {속성명: 속성값})   
     page = driver.page_source
     source = BeautifulSoup(page,'html.parser',from_encoding='utf-8')
@@ -80,8 +80,9 @@ for i in range(1,page_num+1):
         if(i.find('span',{'class':'badge-satisfaction badge-satisfaction-bad'})):
             negative_reviews.append(i.findAll('a')[0].get_text().strip().replace('\n','').replace('\t','').replace('\r',''))
             negative_reviews.append(i.findAll('a')[1].get_text().strip().replace('\n','').replace('\t','').replace('\r',''))
-        
-    driver.find_element_by_xpath("//a[@class='next']").click() #다음페이지 이동
+    
+    if(page_num>numPage):
+        driver.find_element_by_xpath("//a[@class='next']").click() #다음페이지 이동
     
 
 # 텍스트파일에 댓글 저장하기
