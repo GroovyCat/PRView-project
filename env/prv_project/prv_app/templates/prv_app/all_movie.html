@@ -10,7 +10,7 @@
       <link rel="stylesheet" href="{% static 'css/pr_b.css' %}">
     </head>
     <body>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
+      <header class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
         <div class="container">
           <a class="navbar-brand" href="{% url 'prv_app:prv_list' %}">PRView</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,20 +18,20 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
               <ul class="navbar-nav ml-auto">
-                <form action="button/" method="POST">
+                <form action="" method="POST">
                 {%  csrf_token %}
                   <div>
                     <label for="text">URL or Movie Name</label>
                     <input type="text" name="url_movie_text" size="50"/>
-                    <a href="{% url 'prv_app:button' %}"><button class="btn" type ="submit">search</button></a>
+                    <a href="{% url 'prv_app:button' %}"><button class="btn" type ="text">search</button></a>
                   </div>
                 </form>
               </ul>
             </div>
-        </div>
-      </nav> 
+          </div>
+      </header>
       <!-- Page Content -->
-      <header class="masthead">
+      <nav class="masthead">
         <div class="container h-100">
           <div class="row h-100 align-items-center">
             <div class="container">
@@ -43,20 +43,21 @@
                 <div class="row">
                   <div class="col-xs-12 col-sm-6 col-md-4">
                     <span class="list-group">
-                      <a href="{% url 'prv_app:prv_list' %}" class="list-group-item list-group-item-success">전체 워드클라우드</a>
-                      <a href="{% url 'prv_app:prv_list' %}" class="list-group-item list-group-item-info">긍정 워드클라우드</a>
-                      <a href="{% url 'prv_app:prv_list' %}" class="list-group-item list-group-item-danger">부정 워드클라우드</a>
+                      <a href="{% url 'prv_app:all_m' %}" class="list-group-item list-group-item-success">전체 워드클라우드</a>
+                      <a href="{% url 'prv_app:pos_m' %}" class="list-group-item list-group-item-info">긍정 워드클라우드</a>
+                      <a href="{% url 'prv_app:neg_m' %}" class="list-group-item list-group-item-danger">부정 워드클라우드</a>
                     </span>
                   </div>
-                  <div class="col-xs-6 col-md-4"></div>
+                  <div class="col-xs-6 col-md-4">
+                    <span><img src="{% static 'img_all/movie_all.png' %}" alt="..." width="400" height="400" hspace="250"/></span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </header>
+      </nav>
       <!-- Copyright -->
-      <div id="footer" style="background-color: black; color:white;">        
+      <div id="footer" style="background-color:black; color: white;">        
         <div class="container">
           <br>
           <div class="row">

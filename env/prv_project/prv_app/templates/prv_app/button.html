@@ -23,7 +23,7 @@
                   <div>
                     <label for="text">URL or Movie Name</label>
                     <input type="text" name="url_movie_text" size="50"/>
-                    <a href="{% url 'prv_app:button' %}"><input class="btn" type ="submit" value="Seaech"/></a>
+                    <a href="{% url 'prv_app:button' %}"><button class="btn" type ="text">search</button></a>
                   </div>
                 </form>
               </ul>
@@ -42,13 +42,19 @@
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-xs-12 col-sm-6 col-md-4">
+                    {% if url_movie_get > 20 %}
                     <span class="list-group">
-                      <a href="{% url 'prv_app:pos' %}" class="list-group-item list-group-item-success">긍정</a>
-                      <a href="{% url 'prv_app:neg' %}" class="list-group-item list-group-item-danger">부정</a>
+                      <a href="{% url 'prv_app:all' %}" class="list-group-item list-group-item-success">전체 워드클라우드</a>
+                      <a href="{% url 'prv_app:pos' %}" class="list-group-item list-group-item-info">긍정 워드클라우드</a>
+                      <a href="{% url 'prv_app:neg' %}" class="list-group-item list-group-item-danger">부정 워드클라우드</a>
                     </span>
-                  </div>
-                  <div class="col-xs-6 col-md-4">
-                    <span><img src="{% static 'img_url_all/url_all.png' %}" alt="..." width="400" height="400" hspace="250"/></span>
+                    {% else %}
+                    <span class="list-group">
+                        <a href="{% url 'prv_app:all_m' %}" class="list-group-item list-group-item-success">전체 워드클라우드</a>
+                        <a href="{% url 'prv_app:pos_m' %}" class="list-group-item list-group-item-info">긍정 워드클라우드</a>
+                        <a href="{% url 'prv_app:neg_m' %}" class="list-group-item list-group-item-danger">부정 워드클라우드</a>
+                    </span>
+                    {% endif %}
                   </div>
                 </div>
               </div>

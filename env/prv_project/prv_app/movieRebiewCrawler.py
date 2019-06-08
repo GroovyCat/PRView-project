@@ -77,7 +77,7 @@ def movie_craw(moviename):
     negative = 4    #defualt 값
 
     ##페이지 수만큼 반복
-    for i in range(1,page_num+1):
+    for i in range(1, 10):
         url = movieUrl.format(i)
         webpage = urlopen(url)
         source = BeautifulSoup(webpage,'html.parser',from_encoding='utf-8')
@@ -95,14 +95,14 @@ def movie_craw(moviename):
             if(int(review.em.text) <= negative):#부정 부분 수집                                  
                 negative_movie_reviews.append(review.p.get_text().strip().replace('\n','').replace('\t','').replace('\r',''))
 
-        if(page_num>numPage):
-            driver.find_element_by_xpath("//a[@class='next']").click() #다음페이지 이동
+        #if(page_num>numPage):
+            #driver.find_element_by_xpath("//a[@class='next']").click() #다음페이지 이동
 
         ## 텍스트파일에 댓글 저장하기
         #전체, 긍정, 부정 순서
-    file_a = open('movie_all.txt','w+',encoding='utf-8') 
-    file_p = open('movie_pos.txt','w+',encoding='utf-8')
-    file_n = open('movie_neg.txt','w+',encoding='utf-8')
+    file_a = open('movie_all.txt', 'w+', encoding='utf-8') 
+    file_p = open('movie_pos.txt', 'w+', encoding='utf-8')
+    file_n = open('movie_neg.txt', 'w+', encoding='utf-8')
 
     for review in all_movie_reviews:
         file_a.write(review+'\n')
