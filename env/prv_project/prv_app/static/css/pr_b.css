@@ -12,4 +12,9 @@
 }
 .btn {
     background-color: cornflowerblue;
+    color: white;
+}
+
+.img {
+    background-color: darkgray;
 }

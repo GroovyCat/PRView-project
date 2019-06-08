@@ -53,15 +53,13 @@ def search_shop_review(URL):
     # 3. 댓글 페이지 html 구조 긁어오기
     source = BeautifulSoup(page,'html.parser', from_encoding='utf-8') # 한글이 있기때문에 encoding 해줌  #[from_encoding='utf-8생략 가능]
     #print(source)
-
     # 페이지수 읽어오기 
-    # 1 페이지일 경우의 예외처리문
     try:
         page_num = source.find('div',{'class':'pagination pagination-interval'}).find('span',{'class':'num'}).get_text()    #페이지 부분을 str 형태로 변환
         page_num=int(page_num) #str 을 int형으로 변환 
 
     except:
-        page_num=1;     #1페이지 일경우 1로 지정
+        page_num=1;#1페이지 일경우 1로 지정
 
     all_reviews=[]
     positive_reviews=[]
@@ -109,25 +107,5 @@ def search_shop_review(URL):
     file_a.close()
     file_p.close()
     file_n.close()
-
-    file_a = open("shoppingMall_all.txt",'r',encoding='utf-8')
-    text_all = file_a.read() 
-    splitSent.get_tags_all(text_all, 100)
-    file_a.close()
-
-    file_p = open("shoppingMall_pos.txt",'r',encoding='utf-8')
-    try:
-        text_pos = file_p.read()
-        splitSent.get_tags_pos(text_pos, 100)
-    except:
-        file_p.close()
-
-    file_n = open("shoppingMall_neg.txt",'r',encoding='utf-8')
-    try:
-        text_neg = file_n.read()
-        splitSent.get_tags_neg(text_neg, 100)
-        file_n.close()
-    except:
-        file_n.close()
 #남은  부분
 ##영화와 사이트 class(매서드)로 구분 만들어줘야함

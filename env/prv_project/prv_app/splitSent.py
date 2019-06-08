@@ -52,7 +52,7 @@ def get_tags_pos(text, noun_count):
     for n, c in count.most_common(noun_count):
         return_list[n] = c # {명사1 : 빈도, 명사2 : 빈도, 명사3 : 빈도 ...} 형식으로 딕셔너리 저장
     
-    like_mask = np.array(Image.open("like.png"))#좋아요 mask
+    like_mask = np.array(Image.open("C:/Python_basic/env/prv_project/prv_app/static/img/like.png"))#좋아요 mask
     font_path = 'C:/Python_basic/env/prv_project/prv_app/Maplestory_Bold.ttf'#글꼴 경로 설정
    
     wordcloud = WordCloud(font_path = font_path, width = 800, height = 800,
@@ -65,7 +65,7 @@ def get_tags_pos(text, noun_count):
 
     array = wordcloud.to_array()
     fig = plt.figure(figsize=(10, 10))
-   plt.imshow(wordcloud.recolor(color_func=color_func, random_state=3),interpolation="bilinear")
+    plt.imshow(wordcloud.recolor(color_func=color_func, random_state=3),interpolation="bilinear")
     plt.axis("off") # x, y 축의 scale을 안 보이도록 함
     #plt.show() # 생성한 워드 클라우드를 출력한다. 결과 확인용, 최종적으로는 없애도 되는 코드
     fig.savefig('C:/Python_basic/env/prv_project/prv_app/static/img_url_pos/url_pos.png') # 해당 이름으로 png 저장
@@ -81,7 +81,7 @@ def get_tags_neg(text, noun_count):
     for n, c in count.most_common(noun_count):
         return_list[n] = c # {명사1 : 빈도, 명사2 : 빈도, 명사3 : 빈도 ...} 형식으로 딕셔너리 저장
    
-    dislike_mask = np.array(Image.open("dislike.png"))#싫어요 mask
+    dislike_mask = np.array(Image.open("C:/Python_basic/env/prv_project/prv_app/static/img/dislike.png"))#싫어요 mask
     font_path = 'C:/Python_basic/env/prv_project/prv_app/Maplestory_Bold.ttf'#글꼴 경로 설정
    
     wordcloud = WordCloud(font_path = font_path, width = 800, height = 800,

@@ -117,23 +117,4 @@ def movie_craw(moviename):
     file_p.close()
     file_n.close()
     
-    file_a = open('movie_all.txt','r',encoding='utf-8')
-    text_all = file_a.read() 
-    tags_all = splitSent.get_tags_all(text_all, 100)
-    file_a.close()
-
-    file_p = open('movie_pos.txt','r',encoding='utf-8')
-    try:
-        text_pos = file_p.read()
-        splitSent.get_tags_pos(text_pos, 100)
-    except:
-        file_p.close()
     
-
-    file_n = open('movie_neg.txt','r',encoding='utf-8')
-    try:
-        text_neg = file_n.read()
-        splitSent.get_tags_neg(text_neg, 100)
-        file_n.close()
-    except:
-        file_n.close()

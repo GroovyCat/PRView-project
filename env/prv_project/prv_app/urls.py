@@ -7,4 +7,5 @@ urlpatterns = [
     path("button/", views.button, name = "button"),
     path("pos/", views.pos, name="pos"),
     path("neg/", views.neg, name="neg"),
+    path("imageError/", views.error, name="error")
 ]
