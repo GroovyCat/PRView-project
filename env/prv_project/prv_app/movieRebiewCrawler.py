@@ -7,6 +7,7 @@ import math #math 모듈을 먼저 import해야 한다.
 from time import sleep
 from urllib.request import urlopen # 특정 웹서버에 접근
 import requests #서버 접근 허용을 위해 사용 
+from . import splitSent
 
 def movie_craw(moviename):
     movieName = moviename
@@ -94,23 +95,45 @@ def movie_craw(moviename):
             if(int(review.em.text) <= negative):#부정 부분 수집                                  
                 negative_movie_reviews.append(review.p.get_text().strip().replace('\n','').replace('\t','').replace('\r',''))
 
+        if(page_num>numPage):
+            driver.find_element_by_xpath("//a[@class='next']").click() #다음페이지 이동
+
         ## 텍스트파일에 댓글 저장하기
         #전체, 긍정, 부정 순서
-        file_a = open('movie_all.txt','w',encoding='utf-8') 
-        file_p = open('movie_pos.txt','w',encoding='utf-8')
-        file_n = open('movie_neg.txt','w',encoding='utf-8')
+    file_a = open('movie_all.txt','w+',encoding='utf-8') 
+    file_p = open('movie_pos.txt','w+',encoding='utf-8')
+    file_n = open('movie_neg.txt','w+',encoding='utf-8')
 
-        for review in all_movie_reviews:
-            file_a.write(review+'\n')
+    for review in all_movie_reviews:
+        file_a.write(review+'\n')
 
-        for review in positive_movie_reviews:
-            file_p.write(review+'\n')
+    for review in positive_movie_reviews:
+        file_p.write(review+'\n')
 
-        for review in negative_movie_reviews:
-            file_n.write(review+'\n')
+    for review in negative_movie_reviews:
+        file_n.write(review+'\n')
     
-        file_a.close()
-        file_p.close()
-        file_n.close()
+    file_a.close()
+    file_p.close()
+    file_n.close()
+    
+    file_a = open('movie_all.txt','r',encoding='utf-8')
+    text_all = file_a.read() 
+    tags_all = splitSent.get_tags_all(text_all, 100)
+    file_a.close()
 
-    print("end")
+    file_p = open('movie_pos.txt','r',encoding='utf-8')
+    try:
+        text_pos = file_p.read()
+        splitSent.get_tags_pos(text_pos, 100)
+    except:
+        file_p.close()
+    
+
+    file_n = open('movie_neg.txt','r',encoding='utf-8')
+    try:
+        text_neg = file_n.read()
+        splitSent.get_tags_neg(text_neg, 100)
+        file_n.close()
+    except:
+        file_n.close()

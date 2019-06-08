@@ -5,9 +5,9 @@ from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup # 웹페이지 내용구조 해석
 from time import sleep
 from . import splitSent
-from . import KR_WC
 from urllib.request import urlopen 
 import requests
+import os
 def search_shop_review(URL):
     url = URL
     #print(URL)
@@ -90,33 +90,39 @@ def search_shop_review(URL):
     
 
     # 텍스트파일에 댓글 저장하기
-    file_a = open('shoppingMall_all.txt','w+',encoding='utf-8')
-    file_p = open('shoppingMall_pos.txt','w+',encoding='utf-8')
-    file_n = open('shoppingMall_neg.txt','w+',encoding='utf-8')
-
+    file_a = open("shoppingMall_all.txt",'w+',encoding='utf-8')
+    file_p = open("shoppingMall_pos.txt",'w+',encoding='utf-8')
+    file_n = open("shoppingMall_neg.txt",'w+',encoding='utf-8')
+    
     for review in all_reviews:
         file_a.write(review+'\n')
-    #text_all = file_a.read()
-    #tags_all = splitSent.get_tags(text_all, 100)
-    #KR_WC.wordcloud_all('Maplestory_Bold.ttf', tags_all, imagefile)
-
     for review in positive_reviews:
         file_p.write(review+'\n')
-    #text_pos = file_p.read()
-    #tags_pos = splitSent.get_tags(text_pos, 100)
-    #KR_WC.main('Maplestory_Bold.ttf', tags_pos, imagefile)
-
     for review in negative_reviews:
         file_n.write(review+'\n')
-    #text_neg = file_n.read()
-    #tags_neg = splitSent.get_tags(text_neg, 100)
-    #KR_WC.main('Maplestory_Bold.ttf', tags_neg, imagefile)
-    
+
     file_a.close()
     file_p.close()
     file_n.close()
 
-    print("end")
+    file_a = open("shoppingMall_all.txt",'r',encoding='utf-8')
+    text_all = file_a.read() 
+    splitSent.get_tags_all(text_all, 100)
+    file_a.close()
 
+    file_p = open("shoppingMall_pos.txt",'r',encoding='utf-8')
+    try:
+        text_pos = file_p.read()
+        splitSent.get_tags_pos(text_pos, 100)
+    except:
+        file_p.close()
+
+    file_n = open("shoppingMall_neg.txt",'r',encoding='utf-8')
+    try:
+        text_neg = file_n.read()
+        splitSent.get_tags_neg(text_neg, 100)
+        file_n.close()
+    except:
+        file_n.close()
 #남은  부분
 ##영화와 사이트 class(매서드)로 구분 만들어줘야함

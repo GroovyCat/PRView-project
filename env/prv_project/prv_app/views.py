@@ -4,6 +4,7 @@ from . import shoppingMallCrawler
 from . import movieRebiewCrawler
 from .models import Url_data
 from .models import Movie_data
+from . import splitSent
 # Create your views here.
 
 def prv_list(request):
@@ -38,3 +39,11 @@ def button(request):
             movie_val = movie_get
             movieRebiewCrawler.movie_craw(movie_val)
             return render(request, 'prv_app/button.html')
+    
+
+def pos(request):
+    return render(request, 'prv_app/pos.html')
+     
+
+def neg(request):
+    return render(request, 'prv_app/neg.html')

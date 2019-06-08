@@ -18,7 +18,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
               <ul class="navbar-nav ml-auto">
-                <form action="button/" method="POST">
+                <form action="" method="POST">
                 {%  csrf_token %}
                   <div>
                     <label for="text">URL or Movie Name</label>
@@ -29,7 +29,7 @@
               </ul>
             </div>
         </div>
-      </nav> 
+      </nav>
       <!-- Page Content -->
       <header class="masthead">
         <div class="container h-100">
@@ -47,7 +47,9 @@
                       <a href="{% url 'prv_app:neg' %}" class="list-group-item list-group-item-danger">부정</a>
                     </span>
                   </div>
-                  <div class="col-xs-6 col-md-4"></div>
+                  <div class="col-xs-6 col-md-4">
+                    <span><img src="{% static 'img_url_pos/url_pos.png' %}" alt="..." width="400" height="400" hspace="250"/></span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -55,7 +57,7 @@
         </div>
       </header>
       <!-- Copyright -->
-      <div id="footer" style="background-color: black; color:white;">        
+      <div id="footer" style="background-color:black; color:white;">        
         <div class="container">
           <br>
           <div class="row">
