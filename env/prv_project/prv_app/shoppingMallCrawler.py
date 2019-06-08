@@ -55,8 +55,13 @@ def search_shop_review(URL):
     #print(source)
 
     # 페이지수 읽어오기 
-    page_num = source.find('div',{'class':'pagination pagination-interval'}).find('span',{'class':'num'}).get_text()    #페이지 부분을 str 형태로 변환
-    page_num=int(page_num) #str 을 int형으로 변환 
+    # 1 페이지일 경우의 예외처리문
+    try:
+        page_num = source.find('div',{'class':'pagination pagination-interval'}).find('span',{'class':'num'}).get_text()    #페이지 부분을 str 형태로 변환
+        page_num=int(page_num) #str 을 int형으로 변환 
+
+    except:
+        page_num=1;     #1페이지 일경우 1로 지정
 
     all_reviews=[]
     positive_reviews=[]
