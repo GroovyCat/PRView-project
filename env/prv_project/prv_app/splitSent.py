@@ -19,7 +19,11 @@ from wordcloud import WordCloud
 import random
 import numpy as np
 from PIL import Image
-def color_func(word, font_size, position, orientation, random_state=None,**kwargs):
+
+def blue_color_func(word, font_size, position, orientation, random_state=None,**kwargs):
+    return "hsl(955, 100%%, %d%%)" % random.randint(40, 100)#"hsl(색, 다양성, )" % random.radint(밝기,)
+
+def red_color_func(word, font_size, position, orientation, random_state=None,**kwargs):
     return "hsl(0, 100%%, %d%%)" % random.randint(60, 100)
 
 def get_tags_all_url(text, noun_count):
@@ -145,7 +149,7 @@ def get_tags_pos_movie(text, noun_count):
 
     array = wordcloud.to_array()
     fig = plt.figure(figsize=(10, 10))
-    plt.imshow(wordcloud.recolor(color_func=color_func, random_state=3),interpolation="bilinear")
+    plt.imshow(wordcloud.recolor(color_func=blue_color_func, random_state=3),interpolation="bilinear")
     plt.axis("off") # x, y 축의 scale을 안 보이도록 함
     #plt.show() # 생성한 워드 클라우드를 출력한다. 결과 확인용, 최종적으로는 없애도 되는 코드
     fig.savefig('C:/Python_basic/env/prv_project/prv_app/static/img_pos/movie_pos.png') # 해당 이름으로 png 저장
@@ -173,7 +177,7 @@ def get_tags_neg_movie(text, noun_count):
     wordcloud = wordcloud.generate_from_frequencies(return_list)#워드클라우드 생성
     array = wordcloud.to_array()
     fig = plt.figure(figsize=(10, 10))
-    plt.imshow(wordcloud.recolor(color_func=color_func, random_state=3),interpolation="bilinear")
+    plt.imshow(wordcloud.recolor(color_func=red_color_func, random_state=3),interpolation="bilinear")
     plt.axis("off") # x, y 축의 scale을 안 보이도록 함
     #plt.show() # 생성한 워드 클라우드를 출력한다. 결과 확인용, 최종적으로는 없애도 되는 코드
     fig.savefig('C:/Python_basic/env/prv_project/prv_app/static/img_neg/movie_neg.png') # 해당 이름으로 png 저장
