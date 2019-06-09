@@ -71,7 +71,7 @@ def get_tags_pos_url(text, noun_count):
 
     array = wordcloud.to_array()
     fig = plt.figure(figsize=(10, 10))
-    plt.imshow(wordcloud.recolor(color_func=color_func, random_state=3),interpolation="bilinear")
+    plt.imshow(wordcloud.recolor(color_func=blue_color_func, random_state=3),interpolation="bilinear")
     plt.axis("off") # x, y 축의 scale을 안 보이도록 함
     #plt.show() # 생성한 워드 클라우드를 출력한다. 결과 확인용, 최종적으로는 없애도 되는 코드
     fig.savefig('C:/Python_basic/env/prv_project/prv_app/static/img_pos/url_pos.png') # 해당 이름으로 png 저장
@@ -99,7 +99,7 @@ def get_tags_neg_url(text, noun_count):
     wordcloud = wordcloud.generate_from_frequencies(return_list)#워드클라우드 생성
     array = wordcloud.to_array()
     fig = plt.figure(figsize=(10, 10))
-    plt.imshow(wordcloud.recolor(color_func=color_func, random_state=3),interpolation="bilinear")
+    plt.imshow(wordcloud.recolor(color_func=red_color_func, random_state=3),interpolation="bilinear")
     plt.axis("off") # x, y 축의 scale을 안 보이도록 함
     #plt.show() # 생성한 워드 클라우드를 출력한다. 결과 확인용, 최종적으로는 없애도 되는 코드
     fig.savefig('C:/Python_basic/env/prv_project/prv_app/static/img_neg/url_neg.png') # 해당 이름으로 png 저장
