@@ -1,4 +1,4 @@
-# PReView-project
+# PRView-project
 
 주제 : 상품 리뷰 데이터 & 영화 리뷰 데이터를 통한 데이터 시각화
 
