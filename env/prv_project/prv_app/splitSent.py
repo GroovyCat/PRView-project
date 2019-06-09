@@ -24,7 +24,7 @@ def blue_color_func(word, font_size, position, orientation, random_state=None,**
     return "hsl(955, 100%%, %d%%)" % random.randint(40, 100)#"hsl(색, 다양성, )" % random.radint(밝기,)
 
 def grey_color_func(word, font_size, position, orientation, random_state=None,**kwargs):
-    return "hsl(0, 0%%, %d%%)" % random.randint(60, 100)
+    return "hsl(0, 0%%, %d%%)" % random.randint(90, 100)
 
 def red_color_func(word, font_size, position, orientation, random_state=None,**kwargs):
     return "hsl(0, 100%%, %d%%)" % random.randint(60, 100)
@@ -40,9 +40,17 @@ def get_tags_all_url(text, noun_count):
     for n, c in count.most_common(noun_count):
         return_list[n] = c # {명사1 : 빈도, 명사2 : 빈도, 명사3 : 빈도 ...} 형식으로 딕셔너리 저장
     
+    market_mask = np.array(Image.open("C:/Python_basic/env/prv_project/prv_app/static/img/market.png"))#좋아요 mask
     font_path = 'C:/Python_basic/env/prv_project/prv_app/Maplestory_Bold.ttf'#글꼴 경로 설정
-    wordcloud = WordCloud(font_path = font_path, width = 300, height = 300)#워드클라우드 사이즈
-    wordcloud = wordcloud.generate_from_frequencies(return_list)
+   
+    wordcloud = WordCloud(font_path = font_path, width = 800, height = 800,
+        background_color="black",#
+        contour_width=1,#테두리 굵기
+        contour_color='black',#테두리
+        mask = market_mask #마스크 설정
+    )
+    wordcloud = wordcloud.generate_from_frequencies(return_list)#워드클라우드 생
+   
     array = wordcloud.to_array()
     fig = plt.figure(figsize=(10, 10))
     plt.imshow(array, interpolation="bilinear")
@@ -122,7 +130,7 @@ def get_tags_all_movie(text, noun_count):
     font_path = 'C:/Python_basic/env/prv_project/prv_app/Maplestory_Bold.ttf'#글꼴 경로 설정
     
     wordcloud = WordCloud(font_path = font_path, width = 800, height = 800,
-    background_color="black",#바탕색
+    background_color="white",#바탕색
     contour_width=1,#테두리 굵기
     contour_color='black',#테두리색
     mask = movie_mask #마스크 설정
