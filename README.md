@@ -1,12 +1,14 @@
 # PRView-project
 
-주제 : 상품 리뷰 데이터 & 영화 리뷰 데이터를 통한 데이터 시각화
+주제 : 상품 리뷰 데이터 & 영화 리뷰 데이터를 통한 데이터 시각화(Data visualization for Goods review data & Movie review data)
+
+Team Name : 으잉 
 
 1. Project Start : the first semester of the third grade
 
-2. Project Personnel : 4 people
+2. Project Developer Number : 4 
 
-3. Project Member : 채윤재(팀장) 지하린 박문영 장우성
+3. Project Member Name : 채윤재(Team leader, Web) 지하린(Data Visualization) 박문영(Natural language processing) 장우성(Crawling)
 
 # 개발 내용
 
