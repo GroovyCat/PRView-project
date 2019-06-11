@@ -77,7 +77,7 @@ def movie_craw(moviename):
     negative = 4    #defualt 값
 
     ##페이지 수만큼 반복
-    for i in range(1, 10):
+    for i in range(1, 15):
         url = movieUrl.format(i)
         webpage = urlopen(url)
         source = BeautifulSoup(webpage,'html.parser',from_encoding='utf-8')

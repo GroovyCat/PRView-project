@@ -3,6 +3,7 @@
 <html>
     <head>
       <meta charset="UTF-8">
+      <link rel="shortcut icon" href="{% static 'img/logo.png '%}">
       <title>PRView</title>
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
@@ -12,18 +13,18 @@
     <body>
       <header class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
         <div class="container">
-          <a class="navbar-brand" href="{% url 'prv_app:prv_list' %}">PRView</a>
+          <a class="navbar-brand" href="{% url 'prv_app:prv_list' %}"><h1>PRView</h1></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
               <ul class="navbar-nav ml-auto">
-                <form action="" method="POST">
-                {%  csrf_token %}
+                <form action="{% url 'prv_app:button' %}" method="POST">
+                {% csrf_token %}
                   <div>
                     <label for="text">URL or Movie Name</label>
                     <input type="text" name="url_movie_text" size="50"/>
-                    <a href="{% url 'prv_app:button' %}"><button class="btn" type ="text">search</button></a>
+                    <a href="{% url 'prv_app:button' %}"><button class="btn" type ="submit">search</button></a>
                   </div>
                 </form>
               </ul>
@@ -35,13 +36,15 @@
         <div class="container h-100">
           <div class="row h-100 align-items-center">
             <div class="container">
-              <h2 class="font-weight-light">PRView Content</h2>
-              <p>Auction과 네이버 영화 리뷰 시각화 사이트입니다.</p>
-              <p>해당 상품 리뷰 사이트와 영화명을 입력시 리뷰 데이터를 시각화 해줍니다.</p>
-              <p>리뷰 데이터를 긍정과 부정의 의미가 있는 데이터로 보여주는 기능도 있습니다.</p>
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div>
+                      <h2>PRView Content</h2>
+                      <p>Auction과 네이버 영화 리뷰 시각화 사이트</p>
+                      <p>상품 URL or 영화명 입력 시 리뷰 데이터 시각화</p>
+                      <p>긍정과 부정의 리뷰 데이터 시각화</p>
+                    </div>
                     <span class="list-group">
                       <a href="{% url 'prv_app:all' %}" class="list-group-item list-group-item-success">전체 워드클라우드</a>
                       <a href="{% url 'prv_app:pos' %}" class="list-group-item list-group-item-info">긍정 워드클라우드</a>

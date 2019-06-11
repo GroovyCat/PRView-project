@@ -11,7 +11,6 @@ from . import Pos_KR_WC
 from . import Depos_KR_WC
 # Create your views here.
 
-
 def prv_list(request):
     return render(request, 'prv_app/prv_list.html')
 
@@ -189,3 +188,4 @@ def neg_m(request):
             return render(request, 'prv_app/error.html')
     except:
         return render(request, 'prv_app/error.html')
+        
