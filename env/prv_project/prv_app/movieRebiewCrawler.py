@@ -116,5 +116,3 @@ def movie_craw(moviename):
     file_a.close()
     file_p.close()
     file_n.close()
-    
-    

@@ -107,5 +107,3 @@ def search_shop_review(URL):
     file_a.close()
     file_p.close()
     file_n.close()
-#남은  부분
-##영화와 사이트 class(매서드)로 구분 만들어줘야함

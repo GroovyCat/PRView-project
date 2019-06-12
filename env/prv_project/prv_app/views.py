@@ -188,4 +188,3 @@ def neg_m(request):
             return render(request, 'prv_app/error.html')
     except:
         return render(request, 'prv_app/error.html')
-        
