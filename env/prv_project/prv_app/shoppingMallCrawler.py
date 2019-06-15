@@ -75,8 +75,8 @@ def search_shop_review(URL):
                 if(star <= negative):#부정 부분 수집
                     negative_reviews.append(review.find('p',{'class':'text'}).get_text().strip().replace('\n','').replace('\t','').replace('\r',''))
 
-            if(page_num>numPage):   #다음페이지 이동
-                driver.find_element_by_xpath("//a[@class='link__page-move link__page-next']").click()  #다음페이지 이동 ok
+            if(page_num>numPage):   #다음페이지 이동 조건 (전체 페이지보다 현제 페이지가 작을 경우)
+                driver.find_element_by_xpath("//a[@class='link__page-move link__page-next']").click()  #다음페이지 이동
     
     except: #리뷰 내용 없음 별점만 해당 그 뒤페이지로도 쭉이기 때문에 전체 반복문 빠져나옴
         pass
@@ -89,6 +89,7 @@ def search_shop_review(URL):
     file_p = open("shoppingMall_pos.txt",'w+',encoding='utf-8')
     file_n = open("shoppingMall_neg.txt",'w+',encoding='utf-8')
     
+    #전체 긍정 부정 리스트에서 읽어들여 텍스트 생성
     for review in all_reviews:
         file_a.write(review+'\n')
     for review in positive_reviews:

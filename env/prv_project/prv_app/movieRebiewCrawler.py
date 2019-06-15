@@ -35,15 +35,16 @@ def movie_craw(moviename):
     iframe = driver.find_element_by_id("pointAfterListIframe") #id로 iframe 값을 찾음
     driver.switch_to.frame(iframe) #변환해줌
 
-    element =driver.find_element_by_xpath("//a[@id='pagerTagAnchor1']") #리뷰 페이지
+    element =driver.find_element_by_xpath("//a[@id='pagerTagAnchor1']") #전체 리뷰 페이지
 
+    #cotrol + cllick 기능 함수
     ActionChains(driver) \
         .key_down(Keys.CONTROL) \
         .click(element) \
         .key_up(Keys.CONTROL) \
         .perform()
-
-    sleep(3) 
+    
+    sleep(1) 
 
     #드라이버 위치를 신규 텝으로 전환
     last_tab = driver.window_handles[-1]
@@ -54,21 +55,27 @@ def movie_craw(moviename):
 
     # 3. 댓글 페이지 html 구조 긁어오기
     source = BeautifulSoup(html,'html.parser',from_encoding='utf-8') # 한글이 있기때문에 encoding 해줌
-    #print(source)
 
     # 페이지수 읽어오기 
     page_num = source.find('strong',{'class':'total'}).findAll('em')[1].get_text() #총 평가수
-    page_num=(int(page_num.replace(',','')))/10 #str 을 int형으로 변환 읽어온 텍스트중 ,표시를 공백으로 바꿔줌
-    page_num=math.ceil(page_num) #올림
-    #print(page_num)
+    page_num=(int(page_num.replace(',','')))/10 #str 을 int형으로 변환  / 읽어온 텍스트중 ,표시를 공백으로 바꿔줌
+    page_num=math.ceil(page_num) #math 모듈의 올림 함수
 
     if(page_num>1000):
         page_num=1000
         #print(page_num)
 
-    movieUrl = driver.current_url  #영화 리뷰 사이트 url 받아오기  (현제 url 받아오는 함수 사용)
-    movieUrl= movieUrl.replace('&page=1', '&page={}') #replace함수를 사용해 url을 반복문에 사용하기 좋게 바꿔주기
+    movie_url = driver.current_url  #영화 리뷰 사이트 url 받아오기  (현제 url 받아오는 함수 사용)
+    movie_url= movie_url.replace('&page=1', '&page={}') #replace함수를 사용해 url을 반복문에 사용하기 좋게 바꿔주기
+    
+    driver.close()  #드라이버 종료
 
+    return movie_url, page_num  #영화 페이지 url, 전체 페이지 숫자 
+
+
+#멀티 프로세싱할 함수 pool을 이용해 작동 map함수 인자값이 하나지만 해결 파이썬 3.6이상부터 해결방법으로 해결
+#페이지와 영화 url부분을 받아 멀티프로세싱 동작 실행
+def movieCrawler(start,Mpage):
     all_movie_reviews=[]
     positive_movie_reviews=[]
     negative_movie_reviews=[]
