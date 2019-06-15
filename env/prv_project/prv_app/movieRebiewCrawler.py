@@ -1,30 +1,55 @@
-## 1. 웹크롤링을 위한 웹드라이버 응용 2
-from selenium import webdriver
+'''
+
+ <영화 제목을 입력 받아 영화 리뷰(전체, 긍정, 부정)으로 나누어 텍스트를 생성하는 프로그램> 
+selenium 함수의 기능과 BeautifulSoup을 이용하여 페이지를 이동하며 원하는 값을 스크레핑 하고 방법으로는
+requests 함수를 통해 url에서 응답메시지를 읽어온후에 스크래핑 작업을 수행 그리고 빠른 동작을 위하여 
+multipocessing 을 모듈의 함수중 하나인 pool함수 사용합니다. 기본적으로는 pool.map() 인자는 하나 이나 
+partial, contextlib의 contextmanager 함수를 활용 하여 인자값을 2개 받아 작동 후 최종 결과 값을 text값으로 
+출력해주는 해주며 종료되는 프로그램 입니다.
+
+'''
+
+from selenium import webdriver #  웹크롤링을 위한 웹드라이버
 from bs4 import BeautifulSoup # 웹페이지 내용구조 해석
+# selenium 마우스 컨트롤 기능 ex control + click 
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains #contril click in selenium
-import math #math 모듈을 먼저 import해야 한다.
-from time import sleep
-from urllib.request import urlopen # 특정 웹서버에 접근
-import requests #서버 접근 허용을 위해 사용 
-from . import splitSent
+from selenium.webdriver.common.action_chains import ActionChains
+import math #math 수식을 위한 모듈
+from time import sleep, time #time함수
+#서버 접근 허용을 위해 사용 
+from urllib.request import urlopen 
+import requests 
+#from . import splitSent 
+#멀티프로세싱을 위한 모듈
+import multiprocessing  
+from functools import partial
+from contextlib import contextmanager
 
-def movie_craw(moviename):
-    movieName = moviename
 
-    driver = webdriver.Chrome('C:/Python_basic/env/prv_project/prv_app/chromedriver')
-    #driver = webdriver.PhantomJS('/Users\/kddn/Documents/crawling/phantomjs-2.1.1-windows/bin/phantomjs')
-    driver.implicitly_wait(3)
-    # url에 접근한다.
+# 영화명을 입력받아  [영화 페이지 url, 전체 페이지 숫자] 리턴 함수
+def movieUrl(name):
+    movieName = name
+
+    #헤드 리스 모드 사용할시  (30번 라인 지우고 주석 헤제) 
+    # options = webdriver.ChromeOptions() #크롬 옵션
+    #options.add_argument('headless')    #headless 모드
+    #options.add_argument('window-size=1920*1080')
+    #options.add_argument("disable-gpu")
+    #options.add_argument("--disable-gpu") #오류가 생길시
+    #driver = webdriver.Chrome(C:/Python_basic/env/prv_project/prv_app/chromedriver', chrome_options=options)
     
+    driver = webdriver.Chrome('C:/Python_basic/env/prv_project/prv_app/chromedriver')
+    driver.implicitly_wait(2)
+    # url에 접근한다.
+
     driver.get('https://www.naver.com/') #네이버로 이동
     #웹드라이버를 사용하여 (검색과 사이트 이동(click))
 
-    elem=driver.find_element_by_name("query").send_keys(movieName) #검색창에 악인전 검색
-    driver.find_element_by_xpath('//*[@id="search_btn"]').click() 
+    elem=driver.find_element_by_name("query").send_keys(movieName) #검색창에 입력 값 검색
+    driver.find_element_by_xpath('//*[@id="search_btn"]').click()  #검색 클릭
+    
+    driver.find_element_by_xpath("//a[@class='sh_movie_link']").click()  #영화사이트 이동
     #신규텝으로 이동 / 드라이버는 위치는 기존유지
-
-    driver.find_element_by_xpath("//a[@class='sh_movie_link']").click() 
 
     #드라이버 위치를 신규 텝으로 전환
     last_tab = driver.window_handles[-1]
