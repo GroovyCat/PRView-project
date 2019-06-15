@@ -8,6 +8,13 @@ from . import splitSent
 from urllib.request import urlopen 
 import requests
 import os
+
+def findnum(strnum):
+    for i in range(0, len(strnum)) :
+        if strnum[i].isdigit() == True :
+            return strnum[i]
+#문자열중 숫자 찾는 함수
+
 def search_shop_review(URL):
     url = URL
     #print(URL)
