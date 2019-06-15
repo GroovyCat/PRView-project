@@ -108,43 +108,100 @@ def movieCrawler(start,Mpage):
     positive = 7    #defualt 값
     negative = 4    #defualt 값
 
-    ##페이지 수만큼 반복
-    for i in range(1, 15):
-        url = movieUrl.format(i)
-        webpage = urlopen(url)
-        source = BeautifulSoup(webpage,'html.parser',from_encoding='utf-8')
-        reviews=source.find('div',{'class': 'score_result'}).findAll('li')
-   
+    ##페이지 + 숫자
+    url = Mpage.format(start)
+    req = requests.get(url) #응답 확인
+
+    if req.ok: # ok 응답시 실행
+        html=req.text #text로 변환해줌
+        source = BeautifulSoup(html,'html.parser',from_encoding='utf-8')    #파싱하기위한 함수 
+        reviews=source.find('div',{'class': 'score_result'}).findAll('li')             #태그,속성으로 원하는 값 추출
+
         sleep(1)
-        #전체 내용 담기
-        for review in reviews:
+        
+        # 리뷰 데이터 수집
+        for review in reviews:  #추출 내용 부분(리뷰 전체 중 개인 리스트) 반복문
             #전체 수집
             all_movie_reviews.append(review.p.get_text().strip().replace('\n','').replace('\t','').replace('\r',''))
-        
+
             if(int(review.em.text) >= positive):#긍정 부분 수집
                 positive_movie_reviews.append(review.p.get_text().strip().replace('\n','').replace('\t','').replace('\r',''))
-       
+
             if(int(review.em.text) <= negative):#부정 부분 수집                                  
                 negative_movie_reviews.append(review.p.get_text().strip().replace('\n','').replace('\t','').replace('\r',''))
+       
+    #리스트 값에 저장 순서 대로 저장   (전체,긍정,부정)
+    result=[]
+    result.append(all_movie_reviews)
+    result.append(positive_movie_reviews)
+    result.append(negative_movie_reviews)
 
-        #if(page_num>numPage):
-            #driver.find_element_by_xpath("//a[@class='next']").click() #다음페이지 이동
+    return result   #리스트(전체,긍정,부정) 리턴 값
 
-        ## 텍스트파일에 댓글 저장하기
-        #전체, 긍정, 부정 순서
+
+#리스트 값을 받아 리뷰 데이터 텍스트 저장 
+def createText(All,Pos,Neg):
+    # 텍스트파일에 댓글 저장하기
+    #전체, 긍정, 부정 순서
     file_a = open('movie_all.txt', 'w+', encoding='utf-8') 
     file_p = open('movie_pos.txt', 'w+', encoding='utf-8')
     file_n = open('movie_neg.txt', 'w+', encoding='utf-8')
 
-    for review in all_movie_reviews:
+    #전체 긍정 부정 저장
+    for review in All:
         file_a.write(review+'\n')
 
-    for review in positive_movie_reviews:
+    for review in Pos:
         file_p.write(review+'\n')
 
-    for review in negative_movie_reviews:
+    for review in Neg:
         file_n.write(review+'\n')
-    
+
+    #작성 완료후 파일 close
     file_a.close()
     file_p.close()
     file_n.close()
+
+#멀티 스레드 map변수중 여러개를 사용해야되기 때문에 사용하는 함수 [자료조사중 검색을통해 해결한 것]
+# 참고 url <https://stackoverflow.com/questions/5442910/python-multiprocessing-pool-map-for-multiple-arguments>
+@contextmanager
+def poolcontext(*args, **kwargs):
+    pool = multiprocessing.Pool(*args, **kwargs)
+    yield pool
+    pool.terminate()
+
+#전체 실행 함수
+def movieStar(Movie_name):
+    start_time = time() #시간 함수 시작시간
+    
+    movieAll =[]
+    moviePos =[]
+    movieNeg =[]
+
+    movielist=[]
+
+    movie_url, page_num=movieUrl(Movie_name)    #영화 page url 리턴 함수
+    
+    with poolcontext(processes=8) as pool: #8개의 프로세스 동시에 작동
+        #movieCrawler라는 함수에 partial 모듈을 이용하여 값 하나와  1 ~ end까지 1씩늘려가며 인자로 적용
+        movielist = pool.map(partial(movieCrawler, Mpage=movie_url), range(1,page_num,1)) 
+
+    #입력받아온 movielist값을 다시 분해하는 작업 [삼중 리스트이기 때문에 여러 기법 사용]
+    for i in movielist: 
+        mall,mpos,mneg = i  #함수 슬라이싱? 리스트 껍질을 제거하는 용도
+        movieAll.extend(mall)
+        moviePos.extend(mpos)
+        movieNeg.extend(mneg)
+    
+    #출력 확인 print문
+    #print('all',movieAll)
+    #print('pos',moviePos)
+    #print('neg',movieNeg)
+
+    createText(movieAll,moviePos,movieNeg)  #텍스트 생성 함수
+
+    print("실행 시간 : %s초" % (time() - start_time))
+
+if __name__ == '__main__':
+    movieStar()     #영화리뷰 크롤링 시작 함수
+
