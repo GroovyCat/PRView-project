@@ -6,7 +6,6 @@ from .models import Url_data
 from .models import Movie_data
 from . import splitSent
 import os
-from . import splitSent
 # Create your views here.
 
 def prv_list(request):
