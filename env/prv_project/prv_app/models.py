@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class Url_data(models.Model):
+class Url_data(models.Model): # URL DB 모델 클래스 생성
     url_text = models.CharField(max_length = 200, verbose_name = 'URL', blank = True, primary_key=True, null=False)
 
     def approve(self):
@@ -15,7 +15,7 @@ class Url_data(models.Model):
     class Meta:
         verbose_name_plural = '옥션 상품 URL'
 
-class Movie_data(models.Model):
+class Movie_data(models.Model): # 영화명 DB 모델 클래스 생성
     movie_text = models.CharField(max_length = 50, verbose_name = 'Movie', blank = True, primary_key=True, null=False)
 
     def approve(self):

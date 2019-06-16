@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-
+# 각 해당 웹페이지에 대한 path 설정
 app_name = "prv_app"
 urlpatterns = [
     path("", views.prv_list, name = "prv_list"),
