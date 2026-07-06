@@ -33,7 +33,7 @@
     </tr>
     <tr>
       <td align="center">개발 기간</td>
-      <td>2019학년도 1학기</td>
+      <td>2019년 1학기 - 학사 3년차</td>
     </tr>
     <tr>
       <td align="center">개발 인원</td>
