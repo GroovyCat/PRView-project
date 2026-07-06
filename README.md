@@ -1,51 +1,222 @@
-# PRView-project
+# 🔍 PRView - 리뷰 데이터 시각화 웹 서비스
 
-주제 : 상품 리뷰 데이터 & 영화 리뷰 데이터를 통한 데이터 시각화(Data visualization for Goods review data & Movie review data)
+> 상품 및 영화 리뷰 데이터를 크롤링·자연어 처리하여 워드 클라우드로 시각화하는 Django 기반 웹 서비스
 
-Team Name : 으잉 
+<br>
 
-1. Project Start : the first semester of the third grade
+## 📌 목차
 
-2. Project Developer Number : 4 
+- [프로젝트 개요](#-프로젝트-개요)
+- [팀 구성 및 역할](#-팀-구성-및-역할)
+- [기술 스택](#-기술-스택)
+- [주요 기능](#-주요-기능)
+- [시스템 흐름](#-시스템-흐름)
+- [요구사항 구현 현황](#-요구사항-구현-현황)
+- [실행 결과](#-실행-결과)
+- [설치 및 실행 방법](#-설치-및-실행-방법)
 
-3. Project Member Name : 채윤재(Team leader, Web) 지하린(Data Visualization) 박문영(Natural language processing) 장우성(Crawling)
+<br>
 
-# 개발 내용
+## 📖 프로젝트 개요
 
-1. Development Environment : VS Code, Python, Django 
+<table>
+  <thead>
+    <tr>
+      <th width="120" align="center">항목</th>
+      <th>내용</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">프로젝트명</td>
+      <td>PRView (Product & Movie Review Visualization)</td>
+    </tr>
+    <tr>
+      <td align="center">개발 기간</td>
+      <td>2019학년도 1학기</td>
+    </tr>
+    <tr>
+      <td align="center">개발 인원</td>
+      <td>4명</td>
+    </tr>
+    <tr>
+      <td align="center">배포 서버</td>
+      <td>PythonAnywhere</td>
+    </tr>
+    <tr>
+      <td align="center">프로젝트 소개</td>
+      <td>옥션 상품 리뷰와 네이버 영화 리뷰를 크롤링하여 자연어 처리 후 워드 클라우드 이미지로 시각화하는 웹 서비스. 사용자가 상품 URL 또는 영화명을 입력하면 전체·긍정·부정 리뷰를 분석해 시각화 결과를 제공한다.</td>
+    </tr>
+  </tbody>
+</table>
 
-2. Development method 
+<br>
 
-   해당 프로그램은 웹사이트에서 상품 리뷰 데이터 혹은 영화 리뷰 데이터를 크롤링 하고 자연어 처리를 통해 단어 빈도수를 추출한 후 워드 클라우드 이미지로 데이터 시각화를 하는 웹사이트입니다. 상품 리뷰 데이터는 옥션 사이트를 기준으로 했으며, 영화 리뷰 데이터는 네이버 영화를 기준으로 잡았다. 각 해당 기능에 대해서 설명하도록 한다.
-   - 크롤링 기능
-     1. 크롤링하는 것은 selenium이라는 크롤링 라이브러리를 사용해 동적으로 크롤링으로 할 수 있도록 하였다.
-     2. 현 웹사이트에서 상품 링크 주소나 영화명을 입력시 search 버튼을 누르면 webdriver를 통해 크롤링 되는 것을 확인할 수 있다.
-     3. 해당 크롤링 하는 기능은 상품 리뷰 크롤링 함수와 영화 리뷰 크롤링 함수 총 2개로 나뉘어져 있습니다.
-     4. 해당 크롤링 하는 것은 전체 리뷰 데이터 크롤링, 긍정 단어 데이터 크롤링, 부정 단어 데이터 크롤링 총 3개의 데이터 파일로 추출된다.
-   - 자연어 처리
-     1. 해당 크롤링 된 데이터 파일(.txt. 파일)을 명사를 기준으로 해 split한후 단어 데이터를 추출한다.
-     2. 해당 단어 데이터는 딕셔너리 형태로 반환된다.
-     3. 단어 데이터는 해당 단어의 빈도수를 포함한다.
-     4. 라이브러리는 konlpy를 가져와 사용했다.(형태소 분석)
-     5. 해당 자연어 처리된 것은 전체 리뷰 데이터, 긍정 단어 데이터, 부정 단어 데이터로 나뉜다.
-   - 데이터 시각화
-     1. 데이터 시각화 도구는 wordcloud 라이브러리를 이용해 데이터 시각화를 표현한다.
-     2. 해당 자연어 처리된 딕셔너리 형태를 받아와 시각화 이미지를 추출한다.
-     3. 각 해당 이미지는 폴더에 저장한다.
-     4. 각 주제별로 마스킹한 이미지로 워드 클라우드가 생성된다.
-   - front-end
-     1. html과 css을 사용해 웹을 개발하였다.
-     2. bootstrab를 활용해 css와 grid를 설정하였다.
-     3. 각 html에서 python 프로그램이 동작하도록 django Templete를 이용했다.
-   - back-end
-     1. django상에서 백엔드 처리를 하였다.
-     2. SQLite3를 써서 입력 받은 text 데이터를 저장하는 상품 URL DB와 영화명 DB를 모델링하였다.
-     3. 각 주제별 이미지가 해당 폴더 경로에 있으면 관련 html로 이동하도록 개발하였다.
-     4. 만약 해당 주제별 크롤링 데이터 파일의 내용이 없는 경우는 전 과정에서 생성된 이미지를 삭제하도록 하고 에러 이미지를 호출한다.
-     5. 입력 text 데이터는 해당 html로 이동할때 문자열의 길이값을 가지고 와 해당 문자열 길이가 20보다 큰 경우에 상품 URL 관련 html로
-        이동하도록 만들었다. 반대로 작은 경우는 영화명 관련 html로 이동한다.
-     6. 문자열의 길이값을 가지고 오는 이유는 상품 URL 문자열의 길이가 영화명 문자열의 길이보다 크기 때문에 비교하기 위해서 불러온다.
-3. Development Results
+## 👥 팀 구성 및 역할
 
-   현재 구현하고자 하는 기능은 다 구현한 상태이며, 원래 계획했던 전에 생성됐던 이미지를 다시 보여주는 기능은 시간의 문제가 있어 미 구현상태이다.
-   추후에 개발을 더 진행한다면 구현할 예정이다.
+<table>
+  <thead>
+    <tr>
+      <th width="80" style="text-align:center">이름</th>
+      <th width="100" style="text-align:center">역할</th>
+      <th style="text-align:center">작업</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">채윤재</td>
+      <td align="center">팀장</td>
+      <td>Front-end 개발 (HTML/CSS/Bootstrap)<br>Back-end 개발 (Django Views, URL 라우팅)<br>프로젝트 통합 및 관리</td>
+    </tr>
+    <tr>
+      <td align="center">지하린</td>
+      <td align="center">팀원</td>
+      <td>데이터 시각화 (WordCloud)<br>이미지 마스킹</td>
+    </tr>
+    <tr>
+      <td align="center">박문영</td>
+      <td align="center">팀원</td>
+      <td>자연어 처리 (KoNLPy 형태소 분석)<br>데이터 시각화</td>
+    </tr>
+    <tr>
+      <td align="center">장우성</td>
+      <td align="center">팀원</td>
+      <td>웹 크롤링 (Selenium, BeautifulSoup4)</td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+## 🛠 기술 스택
+
+| 분류 | 기술 |
+|------|------|
+| 개발환경 | ![VSCode](https://img.shields.io/badge/VSCode-007ACC?style=flat-square&logo=visualstudiocode&logoColor=white) ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white) |
+| 언어 | ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) |
+| 프레임워크 | ![Django](https://img.shields.io/badge/Django-092E20?style=flat-square&logo=django&logoColor=white) |
+| DB | ![SQLite](https://img.shields.io/badge/SQLite3-003B57?style=flat-square&logo=sqlite&logoColor=white) |
+| 크롤링 | ![Selenium](https://img.shields.io/badge/Selenium-43B02A?style=flat-square&logo=selenium&logoColor=white) ![BeautifulSoup4](https://img.shields.io/badge/BeautifulSoup4-212121?style=flat-square&logoColor=white) |
+| NLP | ![KoNLPy](https://img.shields.io/badge/KoNLPy-FF6F00?style=flat-square&logoColor=white) |
+| 시각화 | ![WordCloud](https://img.shields.io/badge/WordCloud-E91E63?style=flat-square&logoColor=white) |
+| 배포 | ![PythonAnywhere](https://img.shields.io/badge/PythonAnywhere-1D9FD7?style=flat-square&logoColor=white) |
+
+<br>
+
+## ✨ 주요 기능
+
+### 1. 크롤링
+
+사용자가 입력한 상품 URL 또는 영화명을 기반으로 Selenium 웹드라이버를 통해 동적 크롤링을 수행한다.
+
+- **상품 리뷰 크롤링**: 옥션 사이트 상품 URL 입력 → 전체 / 긍정 / 부정 리뷰 데이터 수집
+- **영화 리뷰 크롤링**: 네이버 영화 영화명 입력 → 전체 / 긍정 / 부정 리뷰 데이터 수집
+- 수집 결과는 `.txt` 파일 3개로 저장
+
+### 2. 자연어 처리
+
+크롤링된 `.txt` 파일을 KoNLPy로 형태소 분석하여 명사를 추출하고 단어 빈도수를 딕셔너리 형태로 반환한다.
+
+- 전체 리뷰 / 긍정 단어 / 부정 단어 3가지 데이터셋 처리
+- Multiprocessing으로 대용량 데이터 처리 속도 개선
+
+### 3. 데이터 시각화
+
+자연어 처리된 딕셔너리를 WordCloud 라이브러리로 시각화하고, 주제별 마스킹 이미지를 적용해 워드 클라우드를 생성한다.
+
+- 생성된 이미지는 지정 폴더에 저장
+- 전체 / 긍정 / 부정 3종류의 워드 클라우드 이미지 생성
+
+### 4. Front-end / Back-end
+
+- HTML + CSS + Bootstrap으로 웹 UI 개발
+- Django Template으로 Python 로직과 연동
+- SQLite3로 상품 URL DB 및 영화명 DB 모델링
+- 입력 문자열 길이(20자 기준)로 상품/영화 자동 분류
+- 크롤링 데이터 없을 경우 에러 이미지 호출 및 기존 이미지 삭제 처리
+
+<br>
+
+## 🔄 시스템 흐름
+
+```
+사용자 입력 (상품 URL 또는 영화명)
+  → 문자열 길이 판별 (> 20: 상품 / ≤ 20: 영화)
+  → Selenium 크롤링 (전체 / 긍정 / 부정 .txt 저장)
+  → KoNLPy 자연어 처리 (명사 추출 → 빈도수 딕셔너리)
+  → WordCloud 시각화 (마스킹 이미지 적용)
+  → 결과 이미지 폴더 저장 → 결과 화면 출력
+```
+
+<br>
+
+## ✅ 요구사항 구현 현황
+
+| 요구사항 ID | 내용 | 구현 | 테스트 |
+|---|---|:---:|:---:|
+| PRV_1_RD | 쇼핑몰·영화 리뷰 데이터 수집 | ✅ | ✅ |
+| PRV_2_NLP | 자연어 처리를 통한 명사/빈도 데이터 수집 | ✅ | ✅ |
+| PRV_3_DV | 단어 데이터를 이용한 데이터 시각화 | ✅ | ✅ |
+| PRV_4_UI | 데이터 시각화 UI 디자인 설계 | ✅ | ✅ |
+| PRV_5_DB | 상품 URL·영화명 DB 모델링 | ✅ | ✅ |
+| PRV_6_Views | 각 html 처리 기능 설계 | ✅ | ✅ |
+| PRV_7_Update_Crawling | 쇼핑몰 업데이트에 따른 크롤링 업데이트 | ✅ | ✅ |
+| 이전 이미지 재열람 기능 | 생성된 이미지 다시 보기 | ❌ | - |
+
+<br>
+
+## 🖥 실행 결과
+
+### 메인 화면
+<img src="docs/images/main.png" width="600"/>
+
+### 상품 리뷰 결과 (전체 / 긍정 / 부정 / 에러)
+<img src="docs/images/product_all.png" width="600"/>
+<img src="docs/images/product_pos.png" width="600"/>
+
+> ⚠️ 부정 리뷰 데이터가 존재하지 않아 부정 워드 클라우드 이미지가 생성되지 않을 수 있습니다
+
+<img src="docs/images/product_err.png" width="600"/>
+
+
+### 영화 리뷰 결과 (전체 / 긍정 / 부정 / 에러)
+<img src="docs/images/movie_all.png" width="600"/>
+<img src="docs/images/movie_pos.png" width="600"/>
+<img src="docs/images/movie_neg.png" width="600"/>
+<img src="docs/images/movie_err.png" width="600"/>
+
+<br>
+
+## 🚀 설치 및 실행 방법
+
+### 1. 레포 클론
+
+```bash
+git clone https://github.com/GroovyCat/PRView-project.git
+cd PRView-project
+```
+
+### 2. 가상환경 생성 및 활성화
+
+```bash
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+```
+
+### 3. 의존성 설치
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. DB 마이그레이션
+
+```bash
+python manage.py migrate
+```
+
+### 5. 서버 실행
+
+```bash
+python manage.py runserver
+```
